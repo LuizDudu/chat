@@ -41,15 +41,14 @@ $server->on('message', function (Server $server, Frame $frame) {
     $chatMessage = (new ChatMessage($data->nickname, $data->message))->toArray();
 
     foreach ($server->connections as $connection) {
-        if ($server->getClientInfo($connection)['websocket_status'] !== 3) {
+        if (!$server->isEstablished($connection)) {
             continue;
         }
 
-        if (!$server->isEstablished($frame->fd)) {
-            continue;
-        }
-
-        $server->push($connection, json_encode($chatMessage));
+        $server->push(
+            $connection,
+            json_encode($chatMessage)
+        );
     }
 });
 
