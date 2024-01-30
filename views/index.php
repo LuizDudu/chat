@@ -112,10 +112,9 @@
 </header>
 
 <main class="min-h-[40rem] w-11/12 bg-[#FFE9FF] border-4 rounded-2xl border-[#7E22CE] shadow-2xl shadow-purple-800 p-2 grid">
-    <section aria-label="{{ __('Chat messages') }}"
+    <section aria-label="Chat messages"
              class="max-h-[600px] h-[600px] overflow-y-auto flex-grow p-4">
-
-        <div id="messagesBox" class="grid gap-y-4">
+        <output id="messagesBox" class="grid gap-y-4">
             <template id="messageTemplate">
                 <div class="border-2 pl-2 rounded sent-message">
                     <span class="messages-box-datetime opacity-50">
@@ -132,7 +131,7 @@
                     </div>
                 </div>
             </template>
-        </div>
+        </output>
 
         <noscript class="min-w-max">
             <em class="text-[#7E22CE] min-w-max">
