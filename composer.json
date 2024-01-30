@@ -1,0 +1,21 @@
+{
+  "name": "luizdudu/chat-online",
+  "description": "A fun chat",
+  "type": "project",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Luizdudu\\Chat\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Luiz Eduardo Souza",
+      "email": "lesluizeduardo0@gmail.com"
+    }
+  ],
+  "minimum-stability": "stable",
+  "require": {
+    "php": "^8.3"
+  }
+}
