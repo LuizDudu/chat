@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
+use Luizdudu\Chat\Entities\ChatMessage;
 use Swoole\Http\{
     Request,
     Response
@@ -15,9 +16,17 @@ $server = new Server("0.0.0.0", 8080);
 
 $server->set(['open_http2_protocol' => true]);
 
+$env = parse_ini_file(__DIR__ . '/../.env');
+if (empty($env['DONT_USE_WSS'])) {
+    $env['DONT_USE_WSS'] = "false";
+}
+
 // http && http2
-$server->on('request', function (Request $request, Response $response) {
-    $page = file_get_contents(__DIR__ . '/../views/index.php');
+$server->on('request', function (Request $request, Response $response) use ($env) {
+    $response->header('Content-Type', 'text/html');
+    ob_start();
+    include __DIR__ . '/../views/index.php';
+    $page = ob_get_clean();
     $response->end($page);
 });
 

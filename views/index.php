@@ -34,13 +34,14 @@
       const ranges = ["500", "600", "700", "800", "900"];
 
       document.addEventListener('DOMContentLoaded', _ => {
-        websocket = new WebSocket(`ws://${document.location.host}`);
+        const websocket = new WebSocket(
+          `<?php echo $env['DONT_USE_WSS'] === "true" ? "ws" : "wss" ?>://${document.location.host}`
+        );
 
         const messageTemplate = document.getElementById("messageTemplate");
         const messagesBox = document.getElementById("messagesBox");
 
         const form = document.getElementById('sendMessageForm');
-        const messageInput = form.querySelector("#message");
 
         let nickname = localStorage.getItem("nickname");
 
