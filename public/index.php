@@ -29,7 +29,7 @@ $server->on('message', function (Server $server, Frame $frame) {
         return;
     }
 
-    $chatMessage = (new \Luizdudu\Chat\Entities\ChatMessage($data->nickname, $data->message))->toArray();
+    $chatMessage = (new ChatMessage($data->nickname, $data->message))->toArray();
 
     foreach ($server->connections as $connection) {
         if ($server->getClientInfo($connection)['websocket_status'] !== 3) {
