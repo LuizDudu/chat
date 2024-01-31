@@ -6,11 +6,11 @@ use DateTimeImmutable;
 
 readonly class ChatMessage
 {
-    public string $dateTime;
+    private string $dateTime;
 
     public function __construct(
-        public string $nickname,
-        public string $message,
+        private string $nickname,
+        private string $message,
     ) {
         $this->dateTime = (new DateTimeImmutable())->format('U');
     }
