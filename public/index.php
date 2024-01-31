@@ -12,17 +12,18 @@ use Swoole\WebSocket\{
     Server
 };
 
+setUpEnv();
+
 $server = new Server("0.0.0.0", 8080);
 
-$server->set(['open_http2_protocol' => true]);
-
-$env = parse_ini_file(__DIR__ . '/../.env');
-if (empty($env['DONT_USE_WSS'])) {
-    $env['DONT_USE_WSS'] = "false";
-}
+$server->set([
+    'open_websocket_ping_frame' => true,
+    'open_websocket_pong_frame' => true,
+    'open_http2_protocol' => true,
+]);
 
 // http && http2
-$server->on('request', function (Request $request, Response $response) use ($env) {
+$server->on('request', function (Request $request, Response $response) {
     $response->header('Content-Type', 'text/html');
     ob_start();
     include __DIR__ . '/../views/index.php';
@@ -32,6 +33,14 @@ $server->on('request', function (Request $request, Response $response) use ($env
 
 // websocket
 $server->on('message', function (Server $server, Frame $frame) {
+    if (
+        $frame->opcode == WEBSOCKET_OPCODE_BINARY
+        && $frame->data == WEBSOCKET_OPCODE_PING
+    ) {
+        $server->push($frame->fd, WEBSOCKET_OPCODE_PONG, WEBSOCKET_OPCODE_BINARY);
+        return;
+    }
+
     $data = json_decode($frame->data);
 
     if (empty($data?->nickname) || empty($data?->message)) {

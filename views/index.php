@@ -35,8 +35,22 @@
 
       document.addEventListener('DOMContentLoaded', _ => {
         const websocket = new WebSocket(
-          `<?php echo $env['DONT_USE_WSS'] === "true" ? "ws" : "wss" ?>://${document.location.host}`
+          `<?php echo env('DONT_USE_WSS') === "true" ? "ws" : "wss" ?>://${document.location.host}/chat`
         );
+
+        websocket.binaryType = "arraybuffer";
+
+        let timer = 0;
+        let timerInterval = setInterval(() => {
+          if (websocket.readyState === WebSocket.CLOSED) {
+            clearInterval(timerInterval);
+          }
+          timer++
+          if (timer >= 50) {
+            websocket.send(new Blob([0x09], { type: "application/octet-stream" }));
+            timer = 0;
+          }
+        }, 1000);
 
         const messageTemplate = document.getElementById("messageTemplate");
         const messagesBox = document.getElementById("messagesBox");
@@ -69,6 +83,11 @@
         });
 
         websocket.addEventListener('message', function (event) {
+          timer = 0;
+          if (event.data instanceof ArrayBuffer) {
+            return;
+          }
+
           const data = JSON.parse(event.data);
           const newMessage = messageTemplate.content.cloneNode(true);
 
