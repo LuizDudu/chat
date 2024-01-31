@@ -2,6 +2,8 @@
 
 namespace Luizdudu\Chat\Entities;
 
+use DateTimeImmutable;
+
 readonly class ChatMessage
 {
     public string $dateTime;
@@ -10,7 +12,7 @@ readonly class ChatMessage
         public string $nickname,
         public string $message,
     ) {
-        $this->dateTime = (new \DateTimeImmutable())->format('U');
+        $this->dateTime = (new DateTimeImmutable())->format('U');
     }
 
     public function toArray(): array
