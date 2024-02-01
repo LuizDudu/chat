@@ -38,12 +38,14 @@ $server->set([
 // http && http2
 $server->on('request', function (Request $request, Response $response) use ($mappedFilesUrl) {
     if (in_array($request->server['path_info'], $mappedFilesUrl)) {
+        $response->setHeader('cache-control', 'public, max-age=31560000');
+
         if (str_ends_with($request->server['path_info'], '.js')) {
-            $response->header('Content-Type', 'application/javascript');
+            $response->setHeader('Content-Type', 'application/javascript');
         }
 
         if (str_ends_with($request->server['path_info'], '.css')) {
-            $response->header('Content-Type', 'text/css');
+            $response->setHeader('Content-Type', 'text/css');
         }
 
         $response->sendfile(__DIR__ . $request->server['path_info']);
