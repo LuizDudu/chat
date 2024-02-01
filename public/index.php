@@ -14,6 +14,19 @@ use Swoole\WebSocket\{
 
 setUpEnv();
 
+$acceptedFiles = ['.png', '.ico', '.css', '.txt', '.xml', '.webmanifest', '.js'];
+$files = glob(__DIR__ . '/*');
+$mappedFilesUrl = [];
+foreach ($files as $file) {
+    $fileName = basename($file);
+    foreach ($acceptedFiles as $acceptedFile) {
+        if (str_ends_with($fileName, $acceptedFile)) {
+            $mappedFilesUrl[] = '/' . $fileName;
+            break;
+        }
+    }
+}
+
 $server = new Server("0.0.0.0", 8080);
 
 $server->set([
@@ -23,10 +36,23 @@ $server->set([
 ]);
 
 // http && http2
-$server->on('request', function (Request $request, Response $response) {
+$server->on('request', function (Request $request, Response $response) use ($mappedFilesUrl) {
+    if (in_array($request->server['path_info'], $mappedFilesUrl)) {
+        if (str_ends_with($request->server['path_info'], '.js')) {
+            $response->header('Content-Type', 'application/javascript');
+        }
+
+        if (str_ends_with($request->server['path_info'], '.css')) {
+            $response->header('Content-Type', 'text/css');
+        }
+
+        $response->sendfile(__DIR__ . $request->server['path_info']);
+        return;
+    }
+
     $response->header('Content-Type', 'text/html');
     ob_start();
-    include __DIR__ . '/../views/index.php';
+    include __DIR__ . '/../src/views/index.php';
     $page = ob_get_clean();
     $response->end($page);
 });

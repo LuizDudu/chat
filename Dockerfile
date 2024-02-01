@@ -18,11 +18,19 @@ RUN git clone https://github.com/swoole/swoole-src.git && \
 
 RUN docker-php-ext-enable swoole
 
+RUN apk add nodejs npm
+
 WORKDIR /app
 
 COPY . .
 
-RUN php ../composer.phar i --optimize-autoloader
+RUN if [ "$ENVIRONMENT" = "production" ]; then \
+    php ../composer.phar i --no-dev --optimize-autoloader; \
+  else \
+    hp ../composer.phar i --optimize-autoloader; \
+    npm install; \
+  fi \
+
 RUN php ../composer.phar du
 
 EXPOSE 8080
