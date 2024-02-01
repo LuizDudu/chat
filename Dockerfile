@@ -1,5 +1,7 @@
 FROM php:8.3.2-cli-alpine3.19
 
+ARG ENVIRONMENT=development
+
 RUN apk update \
     && apk add git bash
 
