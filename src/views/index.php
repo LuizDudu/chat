@@ -20,6 +20,11 @@
     <link rel='shortcut icon' href='favicon.ico' type='image/x-icon'>
 
     <title>Luiz Eduardo's Portfolio - Online Chat</title>
+    <meta property="og:title" content="Luiz Eduardo's Portfolio - Online Chat" />
+    <meta property="og:description" content="A project from Luiz Eduardo's portfolio, this is a online chat using PHP, Swoole, Websockets and Tailwind CS" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="<?php echo env('URL') ?>" />
+    <meta property="og:image" content="<?php echo env('URL') . '/apple-touch-icon.png' ?>" />
 
     <!-- Fonts -->
     <link href="output.css" rel="stylesheet">
