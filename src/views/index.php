@@ -22,7 +22,6 @@
     <title>Luiz Eduardo's Portfolio - Online Chat</title>
 
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="output.css" rel="stylesheet">
     <script type="text/javascript">
       const websocket = new WebSocket(
