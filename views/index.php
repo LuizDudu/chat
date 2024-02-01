@@ -3,12 +3,23 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A project from Luiz Eduardo's portfolio, this is a online chat using PHP, Swoole, Websockets and Tailwind CSS">
+    <link rel='icon' href='favicon.ico' type='image/x-icon'>
+    <link rel='shortcut icon' href='favicon.ico' type='image/x-icon'>
 
-    <title>Online Chat</title>
+    <title>Luiz Eduardo's Portfolio - Online Chat</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet"/>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DWP9K96V2H"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-DWP9K96V2H');
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       const colors = [
@@ -124,7 +135,7 @@
       })
     </script>
 </head>
-<body class="bg-[#9D80B1] text-black flex flex-col items-center gap-10">
+<body class="font-sans bg-[#9D80B1] text-black flex flex-col items-center gap-10">
 <header class="mt-4">
     <h1 class="text-3xl text-[#7E22CE] opacity-90">
         Welcome to online chat
