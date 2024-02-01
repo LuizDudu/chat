@@ -31,7 +31,7 @@ RUN if [ "$ENVIRONMENT" = "production" ]; then \
   else \
     hp ../composer.phar i --optimize-autoloader; \
     npm install; \
-  fi \
+  fi
 
 RUN php ../composer.phar du
 
